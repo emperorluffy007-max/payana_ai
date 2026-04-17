@@ -1,6 +1,6 @@
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, lazy, Suspense } from "react";
 
-const MapInner = lazy(() => import('./MapInner'));
+const MapInner = lazy(() => import("./MapInner"));
 
 export function MapBackground({ children }: { children?: React.ReactNode }) {
   const [isClient, setIsClient] = useState(false);

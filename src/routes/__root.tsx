@@ -1,4 +1,13 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import {
+  Outlet,
+  Link,
+  createRootRoute,
+  HeadContent,
+  Scripts,
+  useLocation,
+  useRouter,
+} from "@tanstack/react-router";
+import { useEffect } from "react";
 import { Navbar } from "../components/Navbar";
 
 import appCss from "../styles.css?url";
@@ -31,16 +40,26 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "payana.ai — AI-Powered Transit for Bengaluru" },
-      { name: "description", content: "Real-time BMTC bus tracking, crowd insights, and smart route decisions for Bengaluru commuters." },
+      {
+        name: "description",
+        content:
+          "Real-time BMTC bus tracking, crowd insights, and smart route decisions for Bengaluru commuters.",
+      },
       { property: "og:title", content: "payana.ai — AI-Powered Transit" },
-      { property: "og:description", content: "Real-time BMTC bus tracking and smart route decisions for Bengaluru." },
+      {
+        property: "og:description",
+        content: "Real-time BMTC bus tracking and smart route decisions for Bengaluru.",
+      },
       { property: "og:type", content: "website" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" as const },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -63,9 +82,20 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  const location = useLocation();
+  const router = useRouter();
+  const isSignIn = location.pathname === "/signin";
+
+  useEffect(() => {
+    const isAuth = localStorage.getItem("payana_auth") === "true";
+    if (!isAuth && !isSignIn) {
+      router.navigate({ to: "/signin", replace: true });
+    }
+  }, [isSignIn, router]);
+
   return (
     <>
-      <Navbar />
+      {!isSignIn && <Navbar />}
       <Outlet />
     </>
   );

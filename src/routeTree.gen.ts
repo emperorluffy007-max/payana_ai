@@ -9,16 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SigninRouteImport } from './routes/signin'
 import { Route as RoutesRouteImport } from './routes/routes'
+import { Route as PlanRouteImport } from './routes/plan'
+import { Route as MapRouteImport } from './routes/map'
 import { Route as LeaderboardRouteImport } from './routes/leaderboard'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as CarbonRouteImport } from './routes/carbon'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SigninRoute = SigninRouteImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RoutesRoute = RoutesRouteImport.update({
   id: '/routes',
   path: '/routes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlanRoute = PlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LeaderboardRoute = LeaderboardRouteImport.update({
@@ -53,7 +71,10 @@ export interface FileRoutesByFullPath {
   '/history': typeof HistoryRoute
   '/insights': typeof InsightsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/map': typeof MapRoute
+  '/plan': typeof PlanRoute
   '/routes': typeof RoutesRoute
+  '/signin': typeof SigninRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -61,7 +82,10 @@ export interface FileRoutesByTo {
   '/history': typeof HistoryRoute
   '/insights': typeof InsightsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/map': typeof MapRoute
+  '/plan': typeof PlanRoute
   '/routes': typeof RoutesRoute
+  '/signin': typeof SigninRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +94,10 @@ export interface FileRoutesById {
   '/history': typeof HistoryRoute
   '/insights': typeof InsightsRoute
   '/leaderboard': typeof LeaderboardRoute
+  '/map': typeof MapRoute
+  '/plan': typeof PlanRoute
   '/routes': typeof RoutesRoute
+  '/signin': typeof SigninRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -80,9 +107,21 @@ export interface FileRouteTypes {
     | '/history'
     | '/insights'
     | '/leaderboard'
+    | '/map'
+    | '/plan'
     | '/routes'
+    | '/signin'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/carbon' | '/history' | '/insights' | '/leaderboard' | '/routes'
+  to:
+    | '/'
+    | '/carbon'
+    | '/history'
+    | '/insights'
+    | '/leaderboard'
+    | '/map'
+    | '/plan'
+    | '/routes'
+    | '/signin'
   id:
     | '__root__'
     | '/'
@@ -90,7 +129,10 @@ export interface FileRouteTypes {
     | '/history'
     | '/insights'
     | '/leaderboard'
+    | '/map'
+    | '/plan'
     | '/routes'
+    | '/signin'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -99,16 +141,40 @@ export interface RootRouteChildren {
   HistoryRoute: typeof HistoryRoute
   InsightsRoute: typeof InsightsRoute
   LeaderboardRoute: typeof LeaderboardRoute
+  MapRoute: typeof MapRoute
+  PlanRoute: typeof PlanRoute
   RoutesRoute: typeof RoutesRoute
+  SigninRoute: typeof SigninRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/routes': {
       id: '/routes'
       path: '/routes'
       fullPath: '/routes'
       preLoaderRoute: typeof RoutesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plan': {
+      id: '/plan'
+      path: '/plan'
+      fullPath: '/plan'
+      preLoaderRoute: typeof PlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/leaderboard': {
@@ -155,7 +221,10 @@ const rootRouteChildren: RootRouteChildren = {
   HistoryRoute: HistoryRoute,
   InsightsRoute: InsightsRoute,
   LeaderboardRoute: LeaderboardRoute,
+  MapRoute: MapRoute,
+  PlanRoute: PlanRoute,
   RoutesRoute: RoutesRoute,
+  SigninRoute: SigninRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
