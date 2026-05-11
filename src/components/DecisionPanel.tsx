@@ -31,7 +31,7 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
       2;
   return R * 2 * Math.asin(Math.sqrt(a));
 }
-const MY_LOCATION = { lat: 12.9716, lng: 77.5946 };
+const MY_LOCATION = { lat: 13.0366, lng: 77.6321 }; // HKBK College of Engineering
 
 function CrowdBadge({ level }: { level: string }) {
   const styles: Record<string, string> = {

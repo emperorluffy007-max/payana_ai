@@ -18,6 +18,7 @@ import {
   User,
   Settings,
   ChevronDown,
+  MapPin,
 } from "lucide-react";
 
 const navLinks = [
@@ -53,11 +54,14 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-[1000] glass-panel-elevated">
       <div className="max-w-screen-2xl mx-auto px-4 h-14 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-1.5 shrink-0">
-          <span className="font-heading text-xl font-bold tracking-tight text-foreground">
+        <Link to="/" className="flex items-center gap-2 group shrink-0">
+          <div className="w-9 h-9 rounded-xl overflow-hidden bg-indigo flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.35)] group-hover:scale-105 transition-all duration-300">
+            <MapPin size={22} className="text-white fill-white/20" />
+          </div>
+          <span className="font-heading text-2xl font-bold tracking-tight text-foreground">
             payana<span className="text-indigo">.</span>ai
           </span>
-          <span className="w-2 h-2 rounded-full bg-hyper-green pulse-green" />
+          <span className="w-2 h-2 rounded-full bg-hyper-green pulse-green ml-0.5" />
         </Link>
 
         {/* Desktop */}

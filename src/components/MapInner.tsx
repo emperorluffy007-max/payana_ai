@@ -34,7 +34,7 @@ function getDistance(lat1: number, lon1: number, lat2: number, lon2: number) {
   return R * 2 * Math.asin(Math.sqrt(a));
 }
 
-const MY_LOCATION = { lat: 12.9716, lng: 77.5946 };
+const MY_LOCATION = { lat: 13.0366, lng: 77.6321 }; // HKBK College of Engineering
 
 function getBusColor(bus: Bus): string {
   if (bus.isBestRoute) return "#00FF9D";
@@ -162,9 +162,17 @@ function createMyLocationIcon() {
   });
 }
 
-export default function MapInner({ children }: { children?: React.ReactNode }) {
+export default function MapInner({ children, from, to, isNavigating, onBusReachedStop, tripVariant = 'default' }: { 
+  children?: React.ReactNode; 
+  from?: string; 
+  to?: string; 
+  isNavigating?: boolean; 
+  onBusReachedStop?: () => void; 
+  tripVariant?: 'default' | 'metro';
+}) {
   const [buses, setBuses] = useState(initialBuses);
   const [trains, setTrains] = useState(initialMetroTrains);
+  const [navBusProgress, setNavBusProgress] = useState(0);
 
   const tick = useCallback(() => {
     setBuses((prev) => prev.map(moveBus));
@@ -176,9 +184,47 @@ export default function MapInner({ children }: { children?: React.ReactNode }) {
     return () => clearInterval(interval);
   }, [tick]);
 
+  // Animate the bus moving along the amber line
+  useEffect(() => {
+    if (!isNavigating) {
+      setNavBusProgress(0);
+      return;
+    }
+
+    const isMissedScenario = to?.toLowerCase().includes("electronic city");
+
+    const interval = setInterval(() => {
+      setNavBusProgress((p) => {
+        if (isMissedScenario) {
+          // Scenario 1: Missed Bus
+          if (p >= 1) {
+            onBusReachedStop?.();
+            return 1;
+          }
+          return p + 0.1; // Reaches in 10s
+        } else {
+          // Scenario 2: Perfect Journey
+          if (p >= 0.95) return 0.95; // Stays at stop for boarding
+          return p + 0.05; // Slower approach
+        }
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isNavigating, onBusReachedStop, to]);
+
+  // Bus approach coords (Hebbal towards Nagavara)
+  const busStart = [13.0450, 77.6000];
+  const busEnd = [13.0335, 77.6250]; // Nagavara Junction pickup
+  const routePt1 = [13.0150, 77.6300]; // En route
+  const routePt2 = [12.9734, 77.6080]; // MG Road/Dest
+  const currentNavBusPos = [
+    busStart[0] + (busEnd[0] - busStart[0]) * navBusProgress,
+    busStart[1] + (busEnd[1] - busStart[1]) * navBusProgress,
+  ] as [number, number];
+
   return (
     <MapContainer
-      center={[12.9716, 77.5946]}
+      center={[13.0366, 77.6321]} // Centered on HKBK
       zoom={14}
       className="w-full h-full"
       zoomControl={true}
@@ -196,10 +242,100 @@ export default function MapInner({ children }: { children?: React.ReactNode }) {
       >
         <Tooltip direction="top" permanent className="!bg-transparent !border-0 !shadow-none !p-0">
           <span className="font-heading font-bold text-[10px] bg-blue-600 border border-blue-500 text-white px-2 py-0.5 rounded-full shadow-md uppercase tracking-wider">
-            You
+            You (HKBK College)
           </span>
         </Tooltip>
       </Marker>
+
+      {/* Render Simulated Journey if from and to are provided */}
+      {from && to && (
+        <>
+          {isNavigating ? (
+            <>
+              {tripVariant === 'default' ? (
+                <>
+                  {/* Checkpoint 1: Bus Location to Pickup Point */}
+                  <Polyline
+                    positions={[busStart as [number, number], busEnd as [number, number]]}
+                    pathOptions={{ color: '#F59E0B', weight: 4, opacity: 0.8, dashArray: '6, 6' }}
+                  />
+                  <Marker
+                    position={currentNavBusPos}
+                    icon={createBusIcon('#FACC15')}
+                    zIndexOffset={1500}
+                  >
+                    <Tooltip direction="top" permanent className="!bg-transparent !border-0 !shadow-none !p-0">
+                      <span className="font-heading font-bold text-[10px] bg-amber-500 border border-amber-400 text-white px-2 py-0.5 rounded-full shadow-md uppercase tracking-wider">
+                        Approaching
+                      </span>
+                    </Tooltip>
+                  </Marker>
+
+                  {/* Checkpoint 2: Your walk to Pickup Point */}
+                  <Polyline
+                    positions={[
+                      [MY_LOCATION.lat, MY_LOCATION.lng],
+                      busEnd as [number, number], // Pickup
+                    ]}
+                    pathOptions={{ color: '#06B6D4', weight: 4, opacity: 0.8, dashArray: '4, 6' }}
+                  />
+                </>
+              ) : (
+                <>
+                  {/* RECALCULATED: Path to Metro */}
+                  <Polyline
+                    positions={[
+                      [MY_LOCATION.lat, MY_LOCATION.lng],
+                      [13.0485, 77.6250], // Simulated Metro Station (Nagavara Metro)
+                    ]}
+                    pathOptions={{ color: '#06B6D4', weight: 5, opacity: 0.9, dashArray: '8, 8' }}
+                  />
+                   <Marker position={[13.0485, 77.6250]}>
+                    <Tooltip direction="top" permanent className="!bg-transparent !border-0 !shadow-none !p-0">
+                      <span className="font-heading font-bold text-[10px] bg-emerald-600 border border-emerald-500 text-white px-2 py-0.5 rounded-full shadow-md uppercase tracking-wider">
+                        Nagavara Metro
+                      </span>
+                    </Tooltip>
+                  </Marker>
+                </>
+              )}
+
+              {/* Checkpoint 3: Journey to Destination */}
+              <Polyline
+                positions={[
+                  tripVariant === 'default' ? (busEnd as [number, number]) : [13.0485, 77.6250],
+                  routePt1,
+                  routePt2, // Destination
+                ]}
+                pathOptions={{ 
+                  color: tripVariant === 'default' ? '#4F46E5' : '#10B981', 
+                  weight: 5, 
+                  opacity: 0.8 
+                }}
+              />
+            </>
+          ) : (
+            <Polyline
+              positions={[
+                [MY_LOCATION.lat, MY_LOCATION.lng],
+                busEnd as [number, number],
+                routePt1,
+                routePt2,
+              ]}
+              pathOptions={{ color: '#4F46E5', weight: 4, opacity: 0.8, dashArray: '8, 8' }}
+            />
+          )}
+
+          <Marker position={routePt2 as [number, number]}>
+            <Popup className="font-heading border-none rounded-2xl shadow-xl overflow-hidden">
+              <div className="p-3">
+                <p className="text-xs text-indigo uppercase font-bold tracking-wider mb-1">Destination</p>
+                <h3 className="text-lg font-bold text-slate-800 m-0">{to}</h3>
+              </div>
+            </Popup>
+          </Marker>
+        </>
+      )}
 
       {/* Render Metro Lines */}
       {metroLines.map((line) => (

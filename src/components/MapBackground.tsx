@@ -2,7 +2,16 @@ import { useEffect, useState, lazy, Suspense } from "react";
 
 const MapInner = lazy(() => import("./MapInner"));
 
-export function MapBackground({ children }: { children?: React.ReactNode }) {
+interface MapBackgroundProps {
+  children?: React.ReactNode;
+  from?: string;
+  to?: string;
+  isNavigating?: boolean;
+  onBusReachedStop?: () => void;
+  tripVariant?: 'default' | 'metro';
+}
+
+export function MapBackground({ children, from, to, isNavigating, onBusReachedStop, tripVariant }: MapBackgroundProps) {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
 
@@ -10,7 +19,15 @@ export function MapBackground({ children }: { children?: React.ReactNode }) {
     <div className="fixed inset-0 z-0">
       {isClient && (
         <Suspense fallback={<div className="w-full h-full bg-surface" />}>
-          <MapInner>{children}</MapInner>
+          <MapInner 
+            from={from} 
+            to={to} 
+            isNavigating={isNavigating} 
+            onBusReachedStop={onBusReachedStop}
+            tripVariant={tripVariant}
+          >
+            {children}
+          </MapInner>
         </Suspense>
       )}
     </div>
