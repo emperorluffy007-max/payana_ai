@@ -67,6 +67,7 @@ function TransitCard({
   isExpanded,
   onToggle,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item: any;
   isExpanded: boolean;
   onToggle: () => void;

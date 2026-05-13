@@ -13,7 +13,6 @@ import {
   Clock,
 } from "lucide-react";
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -23,7 +22,6 @@ export const Route = createFileRoute("/")({
   }),
   component: DashboardHub,
 });
-
 
 const MiniMapPreview = lazy(() => import("../components/MiniMapPreview"));
 

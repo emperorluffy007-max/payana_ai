@@ -8,10 +8,17 @@ interface MapBackgroundProps {
   to?: string;
   isNavigating?: boolean;
   onBusReachedStop?: () => void;
-  tripVariant?: 'default' | 'metro';
+  tripVariant?: "default" | "metro";
 }
 
-export function MapBackground({ children, from, to, isNavigating, onBusReachedStop, tripVariant }: MapBackgroundProps) {
+export function MapBackground({
+  children,
+  from,
+  to,
+  isNavigating,
+  onBusReachedStop,
+  tripVariant,
+}: MapBackgroundProps) {
   const [isClient, setIsClient] = useState(false);
   useEffect(() => setIsClient(true), []);
 
@@ -19,10 +26,10 @@ export function MapBackground({ children, from, to, isNavigating, onBusReachedSt
     <div className="fixed inset-0 z-0">
       {isClient && (
         <Suspense fallback={<div className="w-full h-full bg-surface" />}>
-          <MapInner 
-            from={from} 
-            to={to} 
-            isNavigating={isNavigating} 
+          <MapInner
+            from={from}
+            to={to}
+            isNavigating={isNavigating}
             onBusReachedStop={onBusReachedStop}
             tripVariant={tripVariant}
           >

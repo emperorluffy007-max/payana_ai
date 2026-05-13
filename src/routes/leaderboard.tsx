@@ -46,7 +46,11 @@ function LeaderboardPage() {
                 <div className="col-span-4">
                   <span className={`text-sm font-medium ${isYou ? "text-indigo font-bold" : ""}`}>
                     {entry.name}
-                    {isYou && <span className="ml-1.5 badge-indigo px-1.5 py-0.5 rounded text-[10px]">You</span>}
+                    {isYou && (
+                      <span className="ml-1.5 badge-indigo px-1.5 py-0.5 rounded text-[10px]">
+                        You
+                      </span>
+                    )}
                   </span>
                 </div>
                 <div className="col-span-3 flex items-center gap-1 text-xs text-muted-foreground">

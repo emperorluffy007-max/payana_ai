@@ -162,13 +162,20 @@ function createMyLocationIcon() {
   });
 }
 
-export default function MapInner({ children, from, to, isNavigating, onBusReachedStop, tripVariant = 'default' }: { 
-  children?: React.ReactNode; 
-  from?: string; 
-  to?: string; 
-  isNavigating?: boolean; 
-  onBusReachedStop?: () => void; 
-  tripVariant?: 'default' | 'metro';
+export default function MapInner({
+  children,
+  from,
+  to,
+  isNavigating,
+  onBusReachedStop,
+  tripVariant = "default",
+}: {
+  children?: React.ReactNode;
+  from?: string;
+  to?: string;
+  isNavigating?: boolean;
+  onBusReachedStop?: () => void;
+  tripVariant?: "default" | "metro";
 }) {
   const [buses, setBuses] = useState(initialBuses);
   const [trains, setTrains] = useState(initialMetroTrains);
@@ -213,10 +220,10 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
   }, [isNavigating, onBusReachedStop, to]);
 
   // Bus approach coords (Hebbal towards Nagavara)
-  const busStart = [13.0450, 77.6000];
-  const busEnd = [13.0335, 77.6250]; // Nagavara Junction pickup
-  const routePt1 = [13.0150, 77.6300]; // En route
-  const routePt2 = [12.9734, 77.6080]; // MG Road/Dest
+  const busStart = [13.045, 77.6];
+  const busEnd = [13.0335, 77.625]; // Nagavara Junction pickup
+  const routePt1 = [13.015, 77.63]; // En route
+  const routePt2 = [12.9734, 77.608]; // MG Road/Dest
   const currentNavBusPos = [
     busStart[0] + (busEnd[0] - busStart[0]) * navBusProgress,
     busStart[1] + (busEnd[1] - busStart[1]) * navBusProgress,
@@ -252,19 +259,23 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
         <>
           {isNavigating ? (
             <>
-              {tripVariant === 'default' ? (
+              {tripVariant === "default" ? (
                 <>
                   {/* Checkpoint 1: Bus Location to Pickup Point */}
                   <Polyline
                     positions={[busStart as [number, number], busEnd as [number, number]]}
-                    pathOptions={{ color: '#F59E0B', weight: 4, opacity: 0.8, dashArray: '6, 6' }}
+                    pathOptions={{ color: "#F59E0B", weight: 4, opacity: 0.8, dashArray: "6, 6" }}
                   />
                   <Marker
                     position={currentNavBusPos}
-                    icon={createBusIcon('#FACC15')}
+                    icon={createBusIcon("#FACC15")}
                     zIndexOffset={1500}
                   >
-                    <Tooltip direction="top" permanent className="!bg-transparent !border-0 !shadow-none !p-0">
+                    <Tooltip
+                      direction="top"
+                      permanent
+                      className="!bg-transparent !border-0 !shadow-none !p-0"
+                    >
                       <span className="font-heading font-bold text-[10px] bg-amber-500 border border-amber-400 text-white px-2 py-0.5 rounded-full shadow-md uppercase tracking-wider">
                         Approaching
                       </span>
@@ -277,7 +288,7 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
                       [MY_LOCATION.lat, MY_LOCATION.lng],
                       busEnd as [number, number], // Pickup
                     ]}
-                    pathOptions={{ color: '#06B6D4', weight: 4, opacity: 0.8, dashArray: '4, 6' }}
+                    pathOptions={{ color: "#06B6D4", weight: 4, opacity: 0.8, dashArray: "4, 6" }}
                   />
                 </>
               ) : (
@@ -286,12 +297,16 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
                   <Polyline
                     positions={[
                       [MY_LOCATION.lat, MY_LOCATION.lng],
-                      [13.0485, 77.6250], // Simulated Metro Station (Nagavara Metro)
+                      [13.0485, 77.625], // Simulated Metro Station (Nagavara Metro)
                     ]}
-                    pathOptions={{ color: '#06B6D4', weight: 5, opacity: 0.9, dashArray: '8, 8' }}
+                    pathOptions={{ color: "#06B6D4", weight: 5, opacity: 0.9, dashArray: "8, 8" }}
                   />
-                   <Marker position={[13.0485, 77.6250]}>
-                    <Tooltip direction="top" permanent className="!bg-transparent !border-0 !shadow-none !p-0">
+                  <Marker position={[13.0485, 77.625]}>
+                    <Tooltip
+                      direction="top"
+                      permanent
+                      className="!bg-transparent !border-0 !shadow-none !p-0"
+                    >
                       <span className="font-heading font-bold text-[10px] bg-emerald-600 border border-emerald-500 text-white px-2 py-0.5 rounded-full shadow-md uppercase tracking-wider">
                         Nagavara Metro
                       </span>
@@ -303,14 +318,14 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
               {/* Checkpoint 3: Journey to Destination */}
               <Polyline
                 positions={[
-                  tripVariant === 'default' ? (busEnd as [number, number]) : [13.0485, 77.6250],
+                  tripVariant === "default" ? (busEnd as [number, number]) : [13.0485, 77.625],
                   routePt1 as [number, number],
                   routePt2 as [number, number], // Destination
                 ]}
-                pathOptions={{ 
-                  color: tripVariant === 'default' ? '#4F46E5' : '#10B981', 
-                  weight: 5, 
-                  opacity: 0.8 
+                pathOptions={{
+                  color: tripVariant === "default" ? "#4F46E5" : "#10B981",
+                  weight: 5,
+                  opacity: 0.8,
                 }}
               />
             </>
@@ -322,14 +337,16 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
                 routePt1 as [number, number],
                 routePt2 as [number, number],
               ]}
-              pathOptions={{ color: '#4F46E5', weight: 4, opacity: 0.8, dashArray: '8, 8' }}
+              pathOptions={{ color: "#4F46E5", weight: 4, opacity: 0.8, dashArray: "8, 8" }}
             />
           )}
 
           <Marker position={routePt2 as [number, number]}>
             <Popup className="font-heading border-none rounded-2xl shadow-xl overflow-hidden">
               <div className="p-3">
-                <p className="text-xs text-indigo uppercase font-bold tracking-wider mb-1">Destination</p>
+                <p className="text-xs text-indigo uppercase font-bold tracking-wider mb-1">
+                  Destination
+                </p>
                 <h3 className="text-lg font-bold text-slate-800 m-0">{to}</h3>
               </div>
             </Popup>

@@ -29,10 +29,10 @@ function LiveMapPage() {
   const isJourneyMode = !!(from && to);
   const [isNavigating, setIsNavigating] = useState(false);
   const [hasMissed, setHasMissed] = useState(false);
-  const [tripVariant, setTripVariant] = useState<'default' | 'metro'>('default');
+  const [tripVariant, setTripVariant] = useState<"default" | "metro">("default");
 
   const handleBusReachedStop = () => {
-    if (isNavigating && tripVariant === 'default') {
+    if (isNavigating && tripVariant === "default") {
       setIsNavigating(false);
       setHasMissed(true);
     }
@@ -40,10 +40,10 @@ function LiveMapPage() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      <MapBackground 
-        from={from} 
-        to={to} 
-        isNavigating={isNavigating} 
+      <MapBackground
+        from={from}
+        to={to}
+        isNavigating={isNavigating}
         onBusReachedStop={handleBusReachedStop}
         tripVariant={tripVariant}
       />
@@ -52,24 +52,24 @@ function LiveMapPage() {
           {/* Left: Journey Panel (when in journey mode) or Decision Panel */}
           <div className="pointer-events-auto shrink-0 hidden lg:block">
             {isJourneyMode ? (
-              <JourneyPanel 
-                from={from!} 
-                to={to!} 
-                mode={mode} 
-                isNavigating={isNavigating} 
+              <JourneyPanel
+                from={from!}
+                to={to!}
+                mode={mode}
+                isNavigating={isNavigating}
                 setIsNavigating={(val) => {
                   setIsNavigating(val);
                   if (val) setHasMissed(false);
-                }} 
+                }}
                 hasMissed={hasMissed}
                 onResetMissed={() => {
-                   setHasMissed(false);
-                   setTripVariant('default');
+                  setHasMissed(false);
+                  setTripVariant("default");
                 }}
                 onSelectAlternative={(variant) => {
-                   setTripVariant(variant);
-                   setHasMissed(false);
-                   setIsNavigating(true);
+                  setTripVariant(variant);
+                  setHasMissed(false);
+                  setIsNavigating(true);
                 }}
               />
             ) : (

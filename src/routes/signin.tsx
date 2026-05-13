@@ -173,6 +173,7 @@ function AuthPage() {
         <motion.div
           key={i}
           className="floating-bus"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           style={{ top: b.top, left: (b as any).left, right: (b as any).right }}
           animate={{ y: [0, -18, 0], opacity: [0.15, 0.28, 0.15] }}
           transition={{
@@ -193,11 +194,16 @@ function AuthPage() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* ── Brand ── */}
-        <div className="auth-brand" style={{ flexDirection: 'column', alignItems: 'flex-start', gap: '0.2rem' }}>
+        <div
+          className="auth-brand"
+          style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.2rem" }}
+        >
           <div className="w-16 h-16 rounded-2xl bg-indigo flex items-center justify-center shadow-[0_4px_20px_rgba(79,70,229,0.35)] mb-3">
             <MapPin size={36} className="text-white fill-white/10" />
           </div>
-          <p className="auth-brand-sub" style={{ marginTop: '0.4rem' }}>AI-Powered Transit · Bengaluru</p>
+          <p className="auth-brand-sub" style={{ marginTop: "0.4rem" }}>
+            AI-Powered Transit · Bengaluru
+          </p>
         </div>
 
         <div className="auth-hr" />

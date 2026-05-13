@@ -30,7 +30,7 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
           strokeLinecap="round"
           strokeLinejoin="round"
         />
-        
+
         {/* Front Window / Mirror detail */}
         <path
           d="M136 16L143 12C145 11 150 11 150 15V22"
@@ -52,13 +52,26 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
         </text>
 
         {/* Wheels with pulse effect container */}
-        <circle cx="34" cy="46" r="6" fill="var(--background)" stroke="currentColor" strokeWidth="3" />
-        <circle cx="118" cy="46" r="6" fill="var(--background)" stroke="currentColor" strokeWidth="3" />
-        
+        <circle
+          cx="34"
+          cy="46"
+          r="6"
+          fill="var(--background)"
+          stroke="currentColor"
+          strokeWidth="3"
+        />
+        <circle
+          cx="118"
+          cy="46"
+          r="6"
+          fill="var(--background)"
+          stroke="currentColor"
+          strokeWidth="3"
+        />
+
         {/* Modern bus details */}
         <path d="M125 20H142V32H128" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         <path d="M148 26V34" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-
       </svg>
     </div>
   );
