@@ -138,7 +138,7 @@ function InsightsPage() {
                           <span className={`text-white text-xs font-bold px-2 py-0.5 rounded-md shadow-sm ${train.line === "purple" ? "bg-[#8B5CF6]" : "bg-[#10B981]"}`}>{train.line === "purple" ? "Purple" : "Green"}</span>
                           <span className="text-sm font-semibold text-foreground truncate max-w-[120px]">To {train.nextStation}</span>
                         </div>
-                        <span className="text-xs font-bold bg-secondary border border-border px-2 py-0.5 rounded-md text-foreground">{train.status === "arriving" ? "0.1 km" : `${(Math.random() * 2 + 0.5).toFixed(1)} km`}</span>
+                        <span className="text-xs font-bold bg-secondary border border-border px-2 py-0.5 rounded-md text-foreground">{train.status === "Arriving" ? "0.1 km" : `${(Math.random() * 2 + 0.5).toFixed(1)} km`}</span>
                       </div>
                       <div className="flex items-center justify-between mt-1">
                         <span className="text-xs text-muted-foreground">Live Crowd:</span>

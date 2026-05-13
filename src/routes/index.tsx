@@ -230,6 +230,7 @@ function DashboardHub() {
 
             <Link
               to="/routes"
+              search={{ q: "" }}
               className="mt-auto flex items-center justify-center gap-2 w-full py-3 bg-secondary group-hover:bg-[#FF007A]/10 text-foreground group-hover:text-[#FF007A] font-semibold rounded-xl border border-transparent group-hover:border-[#FF007A]/20 transition-colors"
             >
               View All Routes <ChevronRight size={16} />

@@ -304,8 +304,8 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
               <Polyline
                 positions={[
                   tripVariant === 'default' ? (busEnd as [number, number]) : [13.0485, 77.6250],
-                  routePt1,
-                  routePt2, // Destination
+                  routePt1 as [number, number],
+                  routePt2 as [number, number], // Destination
                 ]}
                 pathOptions={{ 
                   color: tripVariant === 'default' ? '#4F46E5' : '#10B981', 
@@ -319,8 +319,8 @@ export default function MapInner({ children, from, to, isNavigating, onBusReache
               positions={[
                 [MY_LOCATION.lat, MY_LOCATION.lng],
                 busEnd as [number, number],
-                routePt1,
-                routePt2,
+                routePt1 as [number, number],
+                routePt2 as [number, number],
               ]}
               pathOptions={{ color: '#4F46E5', weight: 4, opacity: 0.8, dashArray: '8, 8' }}
             />
