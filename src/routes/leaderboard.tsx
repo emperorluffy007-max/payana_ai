@@ -23,7 +23,6 @@ function LeaderboardPage() {
     <>
       <PageShell title="Leaderboard">
         <div className="glass-panel-elevated overflow-hidden">
-          {/* Header */}
           <div className="grid grid-cols-12 gap-4 px-5 py-3 bg-surface text-xs font-medium text-muted-foreground border-b border-border">
             <div className="col-span-1">Rank</div>
             <div className="col-span-4">Commuter</div>
@@ -31,8 +30,6 @@ function LeaderboardPage() {
             <div className="col-span-2 text-right">Points</div>
             <div className="col-span-2 text-right">CO₂ Saved</div>
           </div>
-
-          {/* Entries */}
           {leaderboard.map((entry, i) => {
             const isYou = entry.name === "You";
             return (
@@ -49,11 +46,7 @@ function LeaderboardPage() {
                 <div className="col-span-4">
                   <span className={`text-sm font-medium ${isYou ? "text-indigo font-bold" : ""}`}>
                     {entry.name}
-                    {isYou && (
-                      <span className="ml-1.5 badge-indigo px-1.5 py-0.5 rounded text-[10px]">
-                        You
-                      </span>
-                    )}
+                    {isYou && <span className="ml-1.5 badge-indigo px-1.5 py-0.5 rounded text-[10px]">You</span>}
                   </span>
                 </div>
                 <div className="col-span-3 flex items-center gap-1 text-xs text-muted-foreground">

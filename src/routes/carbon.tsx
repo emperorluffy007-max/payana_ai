@@ -11,16 +11,14 @@ export const Route = createFileRoute("/carbon")({
   head: () => ({
     meta: [
       { title: "My Impact — payana.ai" },
-      {
-        name: "description",
-        content: "Track your personal CO₂ savings, streaks, and commuter rank.",
-      },
+      { name: "description", content: "Track your personal CO₂ savings, streaks, and commuter rank." },
       { property: "og:title", content: "My Impact — payana.ai" },
       { property: "og:description", content: "Track your CO₂ savings and commuter rank." },
     ],
   }),
   component: CarbonPage,
 });
+
 function calculateTimeSavings(baselineETA: number, payanaETA: number) {
   return payanaETA < baselineETA ? baselineETA - payanaETA : 0;
 }
@@ -37,30 +35,10 @@ function CarbonPage() {
         {/* Stats grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
           {[
-            {
-              icon: Leaf,
-              label: "CO₂ Saved",
-              value: `${userStats.co2Saved}kg`,
-              color: "text-hyper-green",
-            },
-            {
-              icon: TreePine,
-              label: "Trees Equivalent",
-              value: String(userStats.treesEquivalent),
-              color: "text-hyper-green",
-            },
-            {
-              icon: Bike,
-              label: "Trips This Month",
-              value: String(userStats.tripsThisMonth),
-              color: "text-indigo",
-            },
-            {
-              icon: Flame,
-              label: "Day Streak",
-              value: String(userStats.streak),
-              color: "text-amber",
-            },
+            { icon: Leaf, label: "CO₂ Saved", value: `${userStats.co2Saved}kg`, color: "text-hyper-green" },
+            { icon: TreePine, label: "Trees Equivalent", value: String(userStats.treesEquivalent), color: "text-hyper-green" },
+            { icon: Bike, label: "Trips This Month", value: String(userStats.tripsThisMonth), color: "text-indigo" },
+            { icon: Flame, label: "Day Streak", value: String(userStats.streak), color: "text-amber" },
           ].map((stat, i) => (
             <motion.div
               key={stat.label}
@@ -83,28 +61,15 @@ function CarbonPage() {
           transition={{ delay: 0.15 }}
           className="glass-panel-elevated p-6 mb-6 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden"
         >
-          {/* Subtle Confetti Dots if Super Saver */}
           {isSuperSaver && (
             <div className="absolute inset-0 pointer-events-none">
               {[...Array(15)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="absolute w-1 h-1 rounded-full bg-indigo/40"
-                  initial={{
-                    top: "-5%",
-                    left: `${Math.random() * 100}%`,
-                    opacity: 1,
-                  }}
-                  animate={{
-                    top: "110%",
-                    rotate: 360,
-                  }}
-                  transition={{
-                    duration: Math.random() * 2 + 2,
-                    repeat: Infinity,
-                    delay: Math.random() * 2,
-                    ease: "linear",
-                  }}
+                  initial={{ top: "-5%", left: `${Math.random() * 100}%`, opacity: 1 }}
+                  animate={{ top: "110%", rotate: 360 }}
+                  transition={{ duration: Math.random() * 2 + 2, repeat: Infinity, delay: Math.random() * 2, ease: "linear" }}
                 />
               ))}
             </div>
@@ -125,31 +90,20 @@ function CarbonPage() {
               standard Google Maps baseline. That's enough time to:
             </p>
             <div className="flex flex-wrap gap-2 text-xs font-medium text-foreground">
-              <span className="bg-surface border border-border px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">
-                🍿 Watch a Movie
-              </span>
-              <span className="bg-surface border border-border px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">
-                🏋️ Gym Session
-              </span>
-              <span className="bg-surface border border-border px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">
-                📞 Call Home
-              </span>
+              <span className="bg-surface border border-border px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">🍿 Watch a Movie</span>
+              <span className="bg-surface border border-border px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">🏋️ Gym Session</span>
+              <span className="bg-surface border border-border px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">📞 Call Home</span>
             </div>
           </div>
           <div className="relative z-10 flex flex-wrap gap-3 items-center shrink-0">
             <div className="bg-[#6366F1] text-white border border-[#6366F1] px-5 py-4 rounded-xl min-w-[140px] shadow-lg shadow-indigo/30">
-              <p className="text-[10px] uppercase font-bold tracking-wider mb-1 opacity-80">
-                Time Reclaimed
-              </p>
+              <p className="text-[10px] uppercase font-bold tracking-wider mb-1 opacity-80">Time Reclaimed</p>
               <div className="flex items-baseline gap-1.5">
                 <p className="font-heading text-4xl font-bold">
-                  {savedMinutes}
-                  <span className="text-lg ml-0.5 font-medium opacity-80">m</span>
+                  {savedMinutes}<span className="text-lg ml-0.5 font-medium opacity-80">m</span>
                 </p>
                 {isSuperSaver && (
-                  <span className="text-[9px] font-bold uppercase bg-white/20 text-white px-1.5 py-0.5 rounded shadow-sm">
-                    Super-Saver!
-                  </span>
+                  <span className="text-[9px] font-bold uppercase bg-white/20 text-white px-1.5 py-0.5 rounded shadow-sm">Super-Saver!</span>
                 )}
               </div>
             </div>
@@ -170,9 +124,7 @@ function CarbonPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
                 <XAxis dataKey="day" tick={{ fontSize: 11, fill: "#475569" }} />
                 <YAxis tick={{ fontSize: 11, fill: "#475569" }} unit="kg" />
-                <Tooltip
-                  contentStyle={{ borderRadius: 12, border: "1px solid #E2E8F0", fontSize: 12 }}
-                />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E2E8F0", fontSize: 12 }} />
                 <Bar dataKey="co2" fill="#00FF9D" radius={[6, 6, 0, 0]} name="CO₂ (kg)" />
               </BarChart>
             </ResponsiveContainer>
@@ -187,13 +139,9 @@ function CarbonPage() {
           >
             <Award size={48} className="text-amber mb-4" />
             <h2 className="font-heading font-bold text-xl">{userStats.badge}</h2>
-            <p className="text-muted-foreground text-sm mt-1">
-              Rank #{userStats.rank} in Bengaluru
-            </p>
+            <p className="text-muted-foreground text-sm mt-1">Rank #{userStats.rank} in Bengaluru</p>
             <div className="mt-4 bg-surface rounded-xl px-6 py-3 border border-border">
-              <p className="metric-value text-3xl text-indigo">
-                {userStats.points.toLocaleString()}
-              </p>
+              <p className="metric-value text-3xl text-indigo">{userStats.points.toLocaleString()}</p>
               <p className="text-xs text-muted-foreground mt-1">Total Points</p>
             </div>
             <div className="mt-4 w-full bg-surface rounded-lg p-3">
@@ -243,9 +191,7 @@ function CarbonPage() {
                   <span className={`text-sm font-medium ${isYou ? "text-indigo font-bold" : ""}`}>
                     {entry.name}
                     {isYou && (
-                      <span className="ml-1.5 badge-indigo px-1.5 py-0.5 rounded text-[10px]">
-                        You
-                      </span>
+                      <span className="ml-1.5 badge-indigo px-1.5 py-0.5 rounded text-[10px]">You</span>
                     )}
                   </span>
                 </div>

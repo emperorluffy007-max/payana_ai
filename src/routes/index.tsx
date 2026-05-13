@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import {
   Search,
@@ -12,7 +12,7 @@ import {
   Navigation2,
   Clock,
 } from "lucide-react";
-import { lazy, Suspense } from "react";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,6 +23,7 @@ export const Route = createFileRoute("/")({
   }),
   component: DashboardHub,
 });
+
 
 const MiniMapPreview = lazy(() => import("../components/MiniMapPreview"));
 

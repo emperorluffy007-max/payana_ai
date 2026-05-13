@@ -6,18 +6,13 @@ import { allRoutes } from "../data/mockData";
 import { PageShell } from "../components/PageShell";
 
 export const Route = createFileRoute("/routes")({
-  validateSearch: (search: Record<string, unknown>) => {
-    return {
-      q: typeof search.q === "string" ? search.q : "",
-    };
-  },
+  validateSearch: (search: Record<string, unknown>) => ({
+    q: typeof search.q === "string" ? search.q : "",
+  }),
   head: () => ({
     meta: [
       { title: "Routes — payana.ai" },
-      {
-        name: "description",
-        content: "Browse all BMTC bus routes in Bengaluru with crowd levels and frequencies.",
-      },
+      { name: "description", content: "Browse all BMTC bus routes in Bengaluru with crowd levels and frequencies." },
       { property: "og:title", content: "Routes — payana.ai" },
       { property: "og:description", content: "Browse all BMTC bus routes in Bengaluru." },
     ],
@@ -25,35 +20,11 @@ export const Route = createFileRoute("/routes")({
   component: RoutesPage,
 });
 
-const areas = [
-  "All",
-  "Majestic",
-  "Indiranagar",
-  "Koramangala",
-  "Hebbal",
-  "Jayanagar",
-  "Whitefield",
-  "Electronic City",
-  "Malleshwaram",
-  "Yelahanka",
-  "Banashankari",
-  "Marathahalli",
-  "BTM Layout",
-];
+const areas = ["All", "Majestic", "Indiranagar", "Koramangala", "Hebbal", "Jayanagar", "Whitefield", "Electronic City", "Malleshwaram", "Yelahanka", "Banashankari", "Marathahalli", "BTM Layout"];
 
 function CrowdBadge({ level }: { level: string }) {
-  const styles: Record<string, string> = {
-    low: "badge-green",
-    moderate: "badge-amber",
-    crowded: "badge-pink",
-  };
-  return (
-    <span
-      className={`px-2 py-0.5 rounded-full text-xs font-medium ${styles[level] || "badge-amber"}`}
-    >
-      {level}
-    </span>
-  );
+  const styles: Record<string, string> = { low: "badge-green", moderate: "badge-amber", crowded: "badge-pink" };
+  return <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${styles[level] || "badge-amber"}`}>{level}</span>;
 }
 
 function RoutesPage() {
@@ -77,13 +48,9 @@ function RoutesPage() {
   return (
     <>
       <PageShell title="Routes">
-        {/* Search */}
         <div className="glass-panel-elevated p-4 mb-4">
           <div className="relative">
-            <Search
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-            />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
             <input
               type="text"
               placeholder="Search routes, stops..."
@@ -104,17 +71,9 @@ function RoutesPage() {
             ))}
           </div>
         </div>
-
-        {/* Route cards */}
         <div className="grid gap-3">
           {filtered.map((r, i) => (
-            <motion.div
-              key={r.id}
-              initial={{ y: 10, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: i * 0.05 }}
-              className="glass-panel-elevated p-4 flex items-center gap-4"
-            >
+            <motion.div key={r.id} initial={{ y: 10, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: i * 0.05 }} className="glass-panel-elevated p-4 flex items-center gap-4">
               <div className="w-16 h-16 rounded-xl bg-indigo/10 flex items-center justify-center shrink-0">
                 <span className="font-heading font-bold text-indigo text-sm">{r.route}</span>
               </div>
@@ -125,14 +84,8 @@ function RoutesPage() {
                   <span>{r.to}</span>
                 </div>
                 <div className="flex items-center gap-3 mt-1.5 text-xs text-muted-foreground">
-                  <span className="flex items-center gap-1">
-                    <Clock size={12} />
-                    {r.duration}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Users size={12} />
-                    Every {r.frequency}
-                  </span>
+                  <span className="flex items-center gap-1"><Clock size={12} />{r.duration}</span>
+                  <span className="flex items-center gap-1"><Users size={12} />Every {r.frequency}</span>
                 </div>
               </div>
               <CrowdBadge level={r.crowdLevel} />

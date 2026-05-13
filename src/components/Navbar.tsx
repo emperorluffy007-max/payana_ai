@@ -28,6 +28,7 @@ const navLinks = [
   { to: "/routes" as const, label: "Routes", icon: Route },
   { to: "/insights" as const, label: "Peak Insights", icon: BarChart3 },
   { to: "/carbon" as const, label: "Impact Tracker", icon: Leaf },
+  { to: "/leaderboard" as const, label: "Leaderboard", icon: Trophy },
   { to: "/history" as const, label: "History", icon: History },
 ];
 
