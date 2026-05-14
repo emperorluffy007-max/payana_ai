@@ -1,4 +1,4 @@
-
+import React from "react";
 interface LogoProps {
   className?: string;
   size?: "sm" | "md" | "lg" | "xl";
@@ -45,8 +45,7 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
           x="12"
           y="38"
           fill="currentColor"
-          className="font-heading font-black italic tracking-tighter"
-          style={{ fontSize: "28px", fontStyle: "italic", letterSpacing: "-0.05em" }}
+          className="font-heading font-black italic tracking-tighter text-[28px]"
         >
           <tspan className="text-[32px] translate-y-1">P</tspan>AYANA
         </text>

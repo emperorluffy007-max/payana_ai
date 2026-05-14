@@ -57,7 +57,15 @@ function OccupancyBar({ value }: { value: number }) {
   const color = value < 40 ? "#00FF9D" : value < 70 ? "#FACC15" : "#FF007A";
   return (
     <div className="occupancy-bar w-full">
-      <div className="occupancy-fill" style={{ width: `${value}%`, background: color }} />
+      <div 
+        className="occupancy-fill" 
+        ref={(el) => {
+          if (el) {
+            el.style.width = `${value}%`;
+            el.style.background = color;
+          }
+        }} 
+      />
     </div>
   );
 }

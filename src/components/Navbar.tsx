@@ -99,6 +99,8 @@ export function Navbar() {
             <button
               onClick={() => setProfileOpen(!profileOpen)}
               className="flex items-center gap-1.5 px-2 py-1.5 rounded-lg hover:bg-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-indigo/50"
+              title="User Profile"
+              aria-label="User Profile Menu"
             >
               <div className="w-7 h-7 rounded-full bg-indigo/10 flex items-center justify-center border border-indigo/20">
                 <User size={14} className="text-indigo" />

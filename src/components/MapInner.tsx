@@ -222,8 +222,8 @@ export default function MapInner({
   // Bus approach coords (Hebbal towards Nagavara)
   const busStart = [13.045, 77.6];
   const busEnd = [13.0335, 77.625]; // Nagavara Junction pickup
-  const routePt1 = [13.015, 77.63]; // En route
-  const routePt2 = [12.9734, 77.608]; // MG Road/Dest
+  const routePt1 = [13.015, 77.63] as [number, number]; // En route
+  const routePt2 = [12.9734, 77.608] as [number, number]; // MG Road/Dest
   const currentNavBusPos = [
     busStart[0] + (busEnd[0] - busStart[0]) * navBusProgress,
     busStart[1] + (busEnd[1] - busStart[1]) * navBusProgress,
@@ -319,8 +319,8 @@ export default function MapInner({
               <Polyline
                 positions={[
                   tripVariant === "default" ? (busEnd as [number, number]) : [13.0485, 77.625],
-                  routePt1 as [number, number],
-                  routePt2 as [number, number], // Destination
+                  routePt1,
+                  routePt2, // Destination
                 ]}
                 pathOptions={{
                   color: tripVariant === "default" ? "#4F46E5" : "#10B981",
@@ -334,8 +334,8 @@ export default function MapInner({
               positions={[
                 [MY_LOCATION.lat, MY_LOCATION.lng],
                 busEnd as [number, number],
-                routePt1 as [number, number],
-                routePt2 as [number, number],
+                routePt1,
+                routePt2,
               ]}
               pathOptions={{ color: "#4F46E5", weight: 4, opacity: 0.8, dashArray: "8, 8" }}
             />

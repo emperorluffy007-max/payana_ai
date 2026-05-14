@@ -127,6 +127,8 @@ function DashboardHub() {
                 <button
                   type="submit"
                   className="bg-secondary p-2 rounded-lg text-muted-foreground hover:text-foreground transition-colors"
+                  title="Search Routes"
+                  aria-label="Search Routes"
                 >
                   <Navigation2 size={18} />
                 </button>

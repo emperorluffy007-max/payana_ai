@@ -23,6 +23,7 @@ export function JourneyPanel({
   setIsNavigating,
   hasMissed,
   onResetMissed,
+  onSelectAlternative,
 }: {
   from: string;
   to: string;
@@ -49,8 +50,7 @@ export function JourneyPanel({
     <div className="w-[320px] bg-card/80 backdrop-blur-xl border border-border rounded-3xl shadow-xl flex flex-col pointer-events-auto h-full max-h-[85vh] overflow-hidden">
       {/* Header */}
       <div
-        className="p-5 border-b border-white/5 relative shrink-0 transition-colors duration-300"
-        style={{ backgroundColor: isNavigating ? "rgba(79,70,229,0.1)" : "transparent" }}
+        className={`p-5 border-b border-white/5 relative shrink-0 transition-colors duration-300 ${isNavigating ? "bg-[#4F46E5]/10" : "bg-transparent"}`}
       >
         <Link
           to="/plan"

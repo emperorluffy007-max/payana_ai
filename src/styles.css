@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+@source "../src";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -156,6 +156,7 @@
 @layer components {
   .glass-panel {
     background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -166,6 +167,7 @@
 
   .glass-panel-elevated {
     background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     border: 1px solid var(--border);
     border-radius: var(--radius);

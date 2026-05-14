@@ -201,12 +201,12 @@ const ChartTooltipContent = React.forwardRef<
                                 "my-0.5": nestLabel && indicator === "dashed",
                               },
                             )}
-                            style={
-                              {
-                                "--color-bg": indicatorColor,
-                                "--color-border": indicatorColor,
-                              } as React.CSSProperties
-                            }
+                            ref={(el) => {
+                              if (el) {
+                                el.style.setProperty("--color-bg", indicatorColor);
+                                el.style.setProperty("--color-border", indicatorColor);
+                              }
+                            }}
                           />
                         )
                       )}
@@ -283,8 +283,10 @@ const ChartLegendContent = React.forwardRef<
               ) : (
                 <div
                   className="h-2 w-2 shrink-0 rounded-[2px]"
-                  style={{
-                    backgroundColor: item.color,
+                  ref={(el) => {
+                    if (el) {
+                      el.style.backgroundColor = item.color;
+                    }
                   }}
                 />
               )}

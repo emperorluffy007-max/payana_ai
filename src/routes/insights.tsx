@@ -60,6 +60,8 @@ function InsightsPage() {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onChange={(e) => setSelectedDay(e.target.value as any)}
                 className="bg-card border border-border text-foreground text-sm rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-indigo/50"
+                title="Select day of the week"
+                aria-label="Select day of the week"
               >
                 <option value="mon">Monday</option>
                 <option value="tue">Tuesday</option>

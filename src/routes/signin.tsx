@@ -30,7 +30,7 @@ export const Route = createFileRoute("/signin")({
 });
 
 /* ── floating decorations ────────────────────────────── */
-const floatingBuses = [
+const floatingBuses: { top: string; left?: string; right?: string; delay: number }[] = [
   { top: "10%", left: "6%", delay: 0 },
   { top: "68%", left: "4%", delay: 1.3 },
   { top: "28%", right: "5%", delay: 0.7 },
@@ -47,6 +47,7 @@ function InputField({
   value,
   onChange,
   extra,
+  autoComplete,
 }: {
   id: string;
   label: string;
@@ -56,6 +57,7 @@ function InputField({
   value: string;
   onChange: (v: string) => void;
   extra?: React.ReactNode;
+  autoComplete?: string;
 }) {
   const [show, setShow] = useState(false);
   const isPw = type === "password";
@@ -74,9 +76,7 @@ function InputField({
           id={id}
           type={isPw ? (show ? "text" : "password") : type}
           placeholder={placeholder}
-          autoComplete={
-            type === "email" ? "email" : type === "password" ? "current-password" : "off"
-          }
+          {...({ autoComplete: autoComplete || "off" } as any)}
           className={`auth-input${isPw ? " auth-input-pw" : ""}`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -173,8 +173,11 @@ function AuthPage() {
         <motion.div
           key={i}
           className="floating-bus"
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          style={{ top: b.top, left: (b as any).left, right: (b as any).right }}
+          style={{
+            top: b.top,
+            left: b.left,
+            right: b.right,
+          }}
           animate={{ y: [0, -18, 0], opacity: [0.15, 0.28, 0.15] }}
           transition={{
             duration: 5 + i * 0.8,
@@ -194,14 +197,11 @@ function AuthPage() {
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       >
         {/* ── Brand ── */}
-        <div
-          className="auth-brand"
-          style={{ flexDirection: "column", alignItems: "flex-start", gap: "0.2rem" }}
-        >
+        <div className="auth-brand flex flex-col items-start gap-1">
           <div className="w-16 h-16 rounded-2xl bg-indigo flex items-center justify-center shadow-[0_4px_20px_rgba(79,70,229,0.35)] mb-3">
             <MapPin size={36} className="text-white fill-white/10" />
           </div>
-          <p className="auth-brand-sub" style={{ marginTop: "0.4rem" }}>
+          <p className="auth-brand-sub mt-1.5">
             AI-Powered Transit · Bengaluru
           </p>
         </div>
@@ -210,18 +210,21 @@ function AuthPage() {
 
         {/* ── Tabs ── */}
         <div className="auth-tabs" role="tablist">
-          {(["signin", "signup"] as const).map((t) => (
-            <button
-              key={t}
-              role="tab"
-              aria-selected={tab === t}
-              id={`tab-${t}`}
-              className={`auth-tab${tab === t ? " auth-tab-active" : ""}`}
-              onClick={() => switchTab(t)}
-            >
-              {t === "signin" ? "Sign In" : "Sign Up"}
-            </button>
-          ))}
+          {(["signin", "signup"] as const).map((t) => {
+            const isSelected = tab === t;
+            return (
+              <button
+                key={t}
+                role="tab"
+                id={`tab-${t}`}
+                className={`auth-tab${isSelected ? " auth-tab-active" : ""}`}
+                onClick={() => switchTab(t)}
+                {...({ "aria-selected": isSelected ? "true" : "false" } as any)}
+              >
+                {t === "signin" ? "Sign In" : "Sign Up"}
+              </button>
+            );
+          })}
           <motion.div
             className="auth-tab-indicator"
             animate={{ x: tab === "signin" ? 0 : "100%" }}
@@ -252,6 +255,7 @@ function AuthPage() {
                 id="si-email"
                 label="Email address"
                 type="email"
+                autoComplete="email"
                 placeholder="you@example.com"
                 icon={Mail}
                 value={siEmail}
@@ -261,6 +265,7 @@ function AuthPage() {
                 id="si-password"
                 label="Password"
                 type="password"
+                autoComplete="current-password"
                 placeholder="••••••••"
                 icon={Lock}
                 value={siPassword}
@@ -310,6 +315,7 @@ function AuthPage() {
               <InputField
                 id="su-name"
                 label="Full name"
+                autoComplete="name"
                 placeholder="Rahul Kumar"
                 icon={User}
                 value={suName}
@@ -319,6 +325,7 @@ function AuthPage() {
                 id="su-phone"
                 label="Phone number (optional)"
                 type="tel"
+                autoComplete="tel"
                 placeholder="+91 98765 43210"
                 icon={Phone}
                 value={suPhone}
@@ -328,6 +335,7 @@ function AuthPage() {
                 id="su-email"
                 label="Email address"
                 type="email"
+                autoComplete="email"
                 placeholder="you@example.com"
                 icon={Mail}
                 value={suEmail}
@@ -337,6 +345,7 @@ function AuthPage() {
                 id="su-password"
                 label="Password"
                 type="password"
+                autoComplete="new-password"
                 placeholder="Min. 8 characters"
                 icon={Lock}
                 value={suPassword}
@@ -346,6 +355,7 @@ function AuthPage() {
                 id="su-confirm"
                 label="Confirm password"
                 type="password"
+                autoComplete="new-password"
                 placeholder="Repeat password"
                 icon={Lock}
                 value={suConfirm}
@@ -840,7 +850,9 @@ function PasswordStrength({ password }: { password: string }) {
           <div key={n} className={`pw-bar${score >= n ? ` active-${level}` : ""}`} />
         ))}
       </div>
-      <span className="pw-label" style={{ color: colors[level] }}>
+      <span 
+        className={`pw-label ${level === 'weak' ? 'text-red-500' : level === 'medium' ? 'text-yellow-400' : 'text-[#00FF9D]'}`}
+      >
         {label[level]} password
       </span>
     </div>

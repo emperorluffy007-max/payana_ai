@@ -195,7 +195,7 @@ function CarbonPage() {
                 <span className="metric-value text-muted-foreground">4820 / 6000</span>
               </div>
               <div className="occupancy-bar">
-                <div className="occupancy-fill" style={{ width: "80%", background: "#4F46E5" }} />
+                <div className="occupancy-fill w-[80%] bg-[#4F46E5]" />
               </div>
             </div>
           </motion.div>

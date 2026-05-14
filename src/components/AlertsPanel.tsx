@@ -73,6 +73,8 @@ export function AlertsPanel() {
                   <button
                     onClick={() => setAlertList((prev) => prev.filter((a) => a.id !== alert.id))}
                     className="text-muted-foreground hover:text-foreground p-0.5"
+                    title="Dismiss"
+                    aria-label="Dismiss"
                   >
                     <X size={12} />
                   </button>
